@@ -1,45 +1,38 @@
 var path = require('path');
+var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-
 module.exports = {
-    entry: "./src/index.tsx",
+    entry: './src/index.jsx',
     output: {
-        filename: "bundle.js",
-        path: __dirname + "/dist"
-    },
-    devtool: "source-map",
-    devServer: {
-        port: 3000,
-        historyApiFallback: true,
-        inline: true
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, './dist')
     },
     resolve: {
-        extensions: ['.ts', '.tsx', '.js'],
-        modules: ['src', 'node_modules']
+            extensions: ['.jsx', '.js'],
     },
-    mode: 'development',
     module: {
-        rules: [
-            {
-                test: /\.css$/,
-                use: [ 'style-loader', 'css-loader' ],
-                exclude: [
-                    path.resolve(__dirname, 'node_modules')
-                ]
-            },
-            {
-                test: /\.tsx?$/, loaders: ['babel-loader', 'ts-loader'], include: path.resolve('src')
+        rules: [{
+            test: /\.css$/,
+            use: ['style-loader', 'css-loader']
+        }, {
+            test: /\.jsx?$/,
+            exclude: /node_modules/,
+            use: {
+                loader: 'babel-loader',
+                options: {
+                    presets: ['es2015', 'react']
+                }
             }
-        ]
+        }],
     },
-    externals: {
-        "react": "React",
-        "react-dom": "ReactDOM"
-    },
+    devtool: 'source-map',
     plugins: [
+        // 加入 html 模板任务
         new HtmlWebpackPlugin({
+            // 模板文件
             template: 'src/index.html',
+            // 打包后文件名称，会自动放到 output 指定的 dist 目录
             filename: 'index.html'
         })
     ]
-};
+}
