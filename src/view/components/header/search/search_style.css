@@ -1,0 +1,25 @@
+.search_div_container{
+
+}
+.search-input-search {
+    float: left;
+    width: 16em;
+    height: 35px;
+    display: inline-block;
+}
+
+.search-img-search {
+    float: left;
+    display: inline-block;
+    width: 2.8em;
+    height: 35px;
+    background: url("/src/view/img/tool.png");
+    background-position: -275px -280px;
+}
+
+.search-button-search {
+    float: left;
+    width: 4em;
+    height: 35px;
+    background-color: rgb(76,173,254);
+}

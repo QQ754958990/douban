@@ -1,0 +1,27 @@
+.main-div-list{
+    margin: 0.3em;
+    padding: 0.3em;
+    display: flex;
+    border-style:solid;
+    border-width:0.1px;
+}
+.main-list-left{
+    margin-right: 0.3em;
+    width: 7em;
+}
+
+.main-list-right{
+    margin-left: 0.3em;
+    width: 13em;
+}
+
+.main-li-image{
+   width: 100%;
+    height: 5.5em;
+}
+
+.main-item-tags{
+    display: inline-block;
+    padding: 0.2px;
+    color: gold;
+}

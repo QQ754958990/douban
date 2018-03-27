@@ -1,0 +1,37 @@
+
+.app-footer{
+    margin-top: 0.25em;
+    width: 20em;
+    height: 4em;
+}
+
+.appfooter-ul-item{
+    height: 4em;
+    list-style-type: none;
+    overflow: hidden;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.appfooter-ul-item li{
+    margin: 0.2em 1.2em 0em 1.2em;
+    font-size: 1.2em;
+    display: inline-block;
+}
+
+.appfooter-ul-item p{
+    position: relative;
+    top: 1.4em;
+}
+
+#appfooter-img-book {
+    background: url("/src/view/img/book.png");
+}
+
+#appfooter-img-movie {
+    background: url("/src/view/img/movie.jpg");
+}
+
+#appfooter-img-music {
+    background: url("/src/view/img/music.jpg");
+}
