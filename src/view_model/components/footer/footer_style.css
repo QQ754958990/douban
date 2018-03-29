@@ -25,13 +25,13 @@
 }
 
 #appfooter-img-book {
-    background: url("/src/view/img/book.png");
+    background: url("/src/view_model/img/book.png");
 }
 
 #appfooter-img-movie {
-    background: url("/src/view/img/movie.jpg");
+    background: url("/src/view_model/img/movie.jpg");
 }
 
 #appfooter-img-music {
-    background: url("/src/view/img/music.jpg");
+    background: url("/src/view_model/img/music.jpg");
 }

@@ -1,39 +1,38 @@
 import * as React from "react";
-
+import './app_style.css';
 const fetchJsonp = require('fetch-jsonp');
 import {Header} from "./components/header/header_index";
 import {Main} from "./components/main/main_index";
 import {Footer} from "./components/footer/footer_index";
-
-interface BookData {
-    image: string; //图片
-    title: string; //书名
-    tags:string[ ];//标签
-    author: string;//作者
-    average: string; //评分
-    pubdate: string;//发布时间
-}
+import {IBookData} from "../model/book_data";
 
 
-export class App extends React.Component implements BookData {
-    image:string;
-    title:string;
-    tags : string[ ];
-    author:string;
-    average:string;
-    pubdate:string;
-    constructor(  ) {
+export class App extends React.Component implements IBookData {
+    image: string;
+    title: string;
+    publisher:string;
+    tags: string[ ];
+    author: string;
+    average: string;
+    pubdate: string;
+    summary:string;
+    price:string;
+
+    constructor() {
         super({});
 
         this.image = 'https://img3.doubanio.com/mpic/s27348744.jpg';
         this.title = '求魔';
-        this.tags = ['玄幻','文学','小说'],
+        this.tags = ['玄幻', '文学', '小说'];
         this.author = '耳根';
+        this.publisher = '我是出版社';
         this.average = '6.8';
         this.pubdate = '2013-12';
+        this.summary ='我是摘要';
+        this.price = '98.5';
 
         this.state = {
-            books:[
+            books: [
                 {
                     image: this.image,
                     title: this.title,
@@ -41,6 +40,9 @@ export class App extends React.Component implements BookData {
                     author: this.author,
                     average: this.average,
                     pubdate: this.pubdate,
+                    summary: this.summary,
+                    publisher: this.publisher,
+                    price : this.price
                 }
             ]
         };
@@ -63,48 +65,11 @@ export class App extends React.Component implements BookData {
 
     }
 
-    sortData(data: any[]): BookData[ ] {
-        let books: BookData[ ] = [data[0]];
-
-        function getTags(tags:any):string[ ]{
-            let arrays: string[] = [tags[0].title];
-            tags.map(function (item: any, index: number) {
-                if (index) {
-                    arrays.push(item.title);
-                }
-            });
-
-            arrays.shift();
-            return arrays;
-        }
-
-        data.map(function (item: any, index: number) {
-            if (index) {
-                var book: BookData = {
-                    image: item.image,
-                    title: item.title,
-                    tags : getTags(item.tags),
-                    author: item.author[0],
-                    average: item.rating.average,
-                    pubdate: item.pubdate,
-                };
-
-                books.push(book);
-            }
-        });
-
-        books.shift();
-
-        return books;
-
-    }
-
     searchLick(keyword: string): void {
         const _self = this;
         this.getbook(keyword).then(function (books: any) {
-            let data:BookData[ ] = _self.sortData(books);
             _self.setState({
-                books:data
+                books: books
             });
 
         });
@@ -113,6 +78,7 @@ export class App extends React.Component implements BookData {
     render() {
         return (
             <div className="douban-app">
+                <article className={'showDetails'}></article>
                 <Header children={this.searchLick.bind(this)}/>
                 <Main children={this.state}/>
                 <Footer/>
