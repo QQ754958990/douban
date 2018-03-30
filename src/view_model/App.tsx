@@ -1,54 +1,49 @@
 import * as React from "react";
 import './app_style.css';
+
 const fetchJsonp = require('fetch-jsonp');
 import {Header} from "./components/header/header_index";
 import {Main} from "./components/main/main_index";
 import {Footer} from "./components/footer/footer_index";
-import {IBookData} from "../model/book_data";
 
-
-export class App extends React.Component implements IBookData {
-    image: string;
-    title: string;
-    publisher:string;
-    tags: string[ ];
-    author: string;
-    average: string;
-    pubdate: string;
-    summary:string;
-    price:string;
+export class App extends React.Component {
 
     constructor() {
         super({});
-
-        this.image = 'https://img3.doubanio.com/mpic/s27348744.jpg';
-        this.title = '求魔';
-        this.tags = ['玄幻', '文学', '小说'];
-        this.author = '耳根';
-        this.publisher = '我是出版社';
-        this.average = '6.8';
-        this.pubdate = '2013-12';
-        this.summary ='我是摘要';
-        this.price = '98.5';
-
         this.state = {
-            books: [
-                {
-                    image: this.image,
-                    title: this.title,
-                    tags: this.tags,
-                    author: this.author,
-                    average: this.average,
-                    pubdate: this.pubdate,
-                    summary: this.summary,
-                    publisher: this.publisher,
-                    price : this.price
-                }
-            ]
+            category: 1,
+            showData: [{}]
         };
     }
 
-    getbook(keyword: string): Promise<Response> {
+    componentDidMount(){
+        const _self = this;
+        this.getMovie('林志颖').then(function (movies:any) {
+            _self.setState({
+                category: 2,
+                showData: movies
+            });
+        });
+    }
+
+    getDefaultBooks(): Promise<Response> {
+        return new Promise(function (resolve, reject) {
+            let url = `https://api.douban.com/v2/book/series/9527/books`;
+            fetchJsonp(url, {
+                    method: 'get'
+                }
+            ).then(function (response: any) {
+                return response.json();
+            }).then(function (json: any) {
+                resolve(json.books);
+            }).catch(function (ex: any) {
+                console.log('parsing failed', ex)
+            })
+        });
+
+    }
+
+    getBooks(keyword: string): Promise<Response> {
         return new Promise(function (resolve, reject) {
             let url = `https://api.douban.com/v2/book/search?q=${keyword}`;
             fetchJsonp(url, {
@@ -65,23 +60,131 @@ export class App extends React.Component implements IBookData {
 
     }
 
-    searchLick(keyword: string): void {
-        const _self = this;
-        this.getbook(keyword).then(function (books: any) {
-            _self.setState({
-                books: books
-            });
-
+    getMovie(keyword:string){
+        return new Promise(function (resolve, reject) {
+            let url = `https://api.douban.com/v2/movie/search?q=${keyword}`;
+            fetchJsonp(url, {
+                    method: 'get'
+                }
+            ).then(function (response: any) {
+                return response.json();
+            }).then(function (json: any) {
+                resolve(json.subjects);
+            }).catch(function (ex: any) {
+                console.log('parsing failed', ex)
+            })
         });
+    }
+
+    getMovieTop250(): Promise<Response> {
+        return new Promise(function (resolve, reject) {
+            let url = `https://api.douban.com/v2/movie/top250`;
+            fetchJsonp(url, {
+                    method: 'get'
+                }
+            ).then(function (response: any) {
+                return response.json();
+            }).then(function (json: any) {
+                resolve(json.subjects);
+            }).catch(function (ex: any) {
+                console.log('parsing failed', ex)
+            })
+        });
+
+    }
+
+    getMusic(keyword:string){
+        return new Promise(function (resolve, reject) {
+            let url = `https://api.douban.com/v2/music/search?q=${keyword}`;
+            fetchJsonp(url, {
+                    method: 'get'
+                }
+            ).then(function (response: any) {
+                return response.json();
+            }).then(function (json: any) {
+                resolve(json.musics);
+            }).catch(function (ex: any) {
+                console.log('parsing failed', ex)
+            })
+        });
+    }
+
+    searchLick(keyword: string,category:number): void {
+        const _self = this;
+        switch (category){
+            case 1:
+                _self.getBooks(keyword).then(function (books: any) {
+                    _self.setState({
+                        category: 1,
+                        showData: books
+                    });
+                });
+                break;
+            case 2:
+                _self.getMovie(keyword).then(function (movies: any) {
+                    _self.setState({
+                        category: 2,
+                        showData: movies
+                    });
+                });
+                break;
+            case 3:
+                _self.getMusic(keyword).then(function (musics: any) {
+                    _self.setState({
+                        category: 3,
+                        showData: musics
+                    });
+                });
+                break
+        }
+
+    }
+
+    showCategory(category: number) {
+        const  _self = this;
+        switch (category){
+            case 1:
+                this.getBooks('林志颖').then(function (books:any) {
+                    _self.setState({
+                        category: 1,
+                        showData: books
+                    });
+                });
+                break;
+            case 2:
+                this.getMovie('林志颖').then(function (movies:any) {
+                    _self.setState({
+                        category: 2,
+                        showData: movies
+                    });
+                });
+                break;
+            case 3:
+                _self.getMusic('林志颖').then(function (musics:any) {
+                    _self.setState({
+                        category: 3,
+                        showData: musics
+                    });
+                });
+                break
+        }
     }
 
     render() {
         return (
             <div className="douban-app">
                 <article className={'showDetails'}></article>
-                <Header children={this.searchLick.bind(this)}/>
-                <Main children={this.state}/>
-                <Footer/>
+                <Header children={{
+                    state:this.state,
+                    fn:this.searchLick.bind(this)
+                }}/>
+                <Main   children={this.state}/>
+                <Footer children={
+                    ({
+                        state:this.state,
+                        fn:this.showCategory.bind(this)
+                    })
+                }/>
             </div>
         );
     }

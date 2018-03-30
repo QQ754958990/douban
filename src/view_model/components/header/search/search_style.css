@@ -1,25 +1,23 @@
 .search_div_container{
-
+    display: flex;
+    justify-content: center;
+    background-color: white;
 }
 .search-input-search {
-    float: left;
-    width: 16em;
-    height: 35px;
-    display: inline-block;
+    flex-grow: 3;
+    border:0;
 }
 
 .search-img-search {
-    float: left;
-    display: inline-block;
-    width: 2.8em;
-    height: 35px;
+    width: 2.5em;
     background: url("/src/view_model/img/tool.png");
-    background-position: -275px -280px;
+    background-position: -275px -277px;
+    flex-grow: 1;
 }
 
 .search-button-search {
-    float: left;
+    flex-grow: 2;
     width: 4em;
-    height: 35px;
+    height: 2.8em;
     background-color: rgb(76,173,254);
 }
