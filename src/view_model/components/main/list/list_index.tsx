@@ -1,5 +1,6 @@
+
 import {Component} from "react";
-import './list_style.css';
+import './list_style.scss';
 
 export class Li extends Component {
 
@@ -41,7 +42,7 @@ export class Li extends Component {
                                         </aside>
                                         <div class="item-list-footer">
                                             <hr/>
-                                            <textarea readonly>${date.summary}</textarea>
+                                            <p >${date.summary}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -53,12 +54,13 @@ export class Li extends Component {
                                     <header class="movie-header-details">
                                          <p class="movie-header-getback" onclick="document.getElementsByClassName('movie-article-details')[0].style.display='none'"><返回</p>
                                          <h3 class="movie-title-details">${date.title}</h3>
-                                    </header>                                  
+                                    </header>
+                                    <div class="item-main-details">                                  
                                     <div class="movie-main-details">
                                             <img class='movie-li-image' src=${date.image}></img>
-                                    </div>
+                                    </div>                                  
                                     <footer class="movie-footer-details">                                                                   
-                                        <div class='movie-genres-details'><span><p class='movie-name-details'>名称:${date.title}</p></span>${
+                                        <div class='movie-genres-details'><span>名称:${date.title}</span>${
                                             date.genres ? (
                                                     date.genres.map(function (item: any, index: number) {
                                                         return `<span><p class='movie-p-genres' key=${index}>${item}</p></span>`
@@ -77,7 +79,8 @@ export class Li extends Component {
                                                      })
                                              ):' '
                                         }</div>                                                                                                   
-                                    </footer>                           
+                                    </footer>
+                                    </div>                           
                                 </article>`;
                 break;
             case 3:
@@ -109,7 +112,7 @@ export class Li extends Component {
                                         </aside>
                                         <div class="item-list-footer">
                                             <hr/>
-                                            <textarea readonly>${date.summary}</textarea>
+                                            <p >${date.summary}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -119,10 +122,6 @@ export class Li extends Component {
         }
 
         document.getElementsByClassName('showDetails')[0].innerHTML = details_html;
-    }
-
-    componentDidMount() {
-
     }
 
     showTable(children:any){

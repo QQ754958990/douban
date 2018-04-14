@@ -49,7 +49,7 @@ export class Main extends React.Component {
                         image: item.image || 'o(╥﹏╥)o',
                         title: item.title || 'o(╥﹏╥)o',
                         tags: item.tags ? getTags(item.tags) : [ ],
-                        author: item.author[0] ? item.author[0].name : 'o(╥﹏╥)o',
+                        author: item.author ? item.author[0].name : 'o(╥﹏╥)o',
                         average: item.rating ? item.rating.average : 'o(╥﹏╥)o',
                         publisher: item.attrs.publisher || 'o(╥﹏╥)o',
                         pubdate: item.attrs.pubdate || 'o(╥﹏╥)o',
