@@ -1,0 +1,65 @@
+@mixin main-item-right {
+  display: inline-block;
+  padding: 0.1em;
+  margin: 0.1em;
+  background-color: gold;
+}
+
+.main-div-list {
+  margin: 0.2em;
+  border-style: solid;
+  border-width: thin;
+  .main-div-li {
+    display: inline-block;
+  }
+  .main-list-left {
+    width: 50%;
+    .main-li-image {
+      padding: 0.2em;
+      width: 100%;
+      max-height: 100%;
+    }
+  }
+  .main-list-right {
+    display: flex;
+    flex-flow: column nowrap;
+    place-content: flex-start center;
+    float: right;
+    width: 50%;
+    font-size: 1.2em;
+    overflow: hidden;
+    div {
+      flex-grow: 1;
+      text-overflow:ellipsis;
+      white-space : nowrap;
+      overflow : hidden;
+    }
+    p {
+      flex-grow: 1;
+      text-overflow:ellipsis;
+      white-space : nowrap;
+      overflow : hidden;
+    }
+    .main-item-tags {
+      @include main-item-right
+    }
+
+    .main-item-genres {
+      @include main-item-right;
+      background-color: red;
+    }
+
+    .movie-name-details {
+      @include main-item-right;
+      background-color: white;
+    }
+
+    .main-item-casts {
+      @include main-item-right;
+      background-color: white;
+      color: #c5c5c5;
+    }
+  }
+
+}
+

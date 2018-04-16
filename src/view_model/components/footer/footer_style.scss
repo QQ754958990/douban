@@ -1,0 +1,34 @@
+
+.app-footer{
+    margin-top: 0.25em;
+    .appfooter-ul-item{
+        display: flex;
+        justify-content: center;
+        height: 3.5em;
+        background-color: #ffffff;
+        .appfooter-item-category{
+            flex-grow: 1;
+            margin: 0.1em;
+            background-repeat: no-repeat !important;
+            background-position-x: 2em !important;
+            text-align: center;
+            p{
+                position: relative;
+                margin-top: 2em;
+            }
+        }
+        #appfooter-img-book {
+            background: url("/src/view_model/img/book.png");
+
+        }
+
+        #appfooter-img-movie {
+            background: url("/src/view_model/img/movie.jpg");
+        }
+
+        #appfooter-img-music {
+            background: url("/src/view_model/img/music.jpg");
+        }
+    }
+}
+
