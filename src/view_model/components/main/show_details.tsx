@@ -1,12 +1,12 @@
+const ShowDetails = (category: string, date: any) => {
 
-const ShowDetails =(category:string,date:any)=>{
-    let details_html : string = '我需要先占个位置';
-    switch (category){
+    let details_html: string = '我需要先占个位置'
+    switch (category) {
         case 'books':
-            details_html  = `<article class="item-article-details">
+            details_html = `<article class="item-article-details">
 
                                 <header class="item-header-details">
-                                     <p class="item-header-getback" onclick="document.getElementsByClassName('item-article-details')[0].style.display='none'"><返回</p>
+                                     <p class="item-header-getback" onclick=remove_element_class(".item-article-details")><返回</p>
                                      <h3 class="item-title-details">${date.title}</h3>
                                 </header>
                                 
@@ -23,11 +23,11 @@ const ShowDetails =(category:string,date:any)=>{
                                              <p class='item-average-details'>评分:${date.average}</p>
                                              <p class='item-price-details'>价钱:${date.price}</p>
                                             <div class='item-tags-details'>${
-                date.tags?(
+                date.tags ? (
                     date.tags.map(function (item: any, index: number) {
                         return `<p class='item-p-tags' key=${index}>${item}</p>`
                     })
-                ):' '
+                ) : ' '
                 }</div>                                     
                                         </aside>
                                         <div class="item-list-footer">
@@ -37,12 +37,12 @@ const ShowDetails =(category:string,date:any)=>{
                                     </div>
                                 </div>
                             
-                            </article>`;
-            break;
+                            </article>`
+            break
         case 'movies':
-            details_html  = `<article class="movie-article-details">
+            details_html = `<article class="movie-article-details">
                                     <header class="movie-header-details">
-                                         <p class="movie-header-getback" onclick="document.getElementsByClassName('movie-article-details')[0].style.display='none'"><返回</p>
+                                         <p class="movie-header-getback" onclick="remove_element_class('.movie-article-details')"><返回</p>
                                          <h3 class="movie-title-details">${date.title}</h3>
                                     </header>
                                     <div class="item-main-details">                                  
@@ -55,7 +55,7 @@ const ShowDetails =(category:string,date:any)=>{
                     date.genres.map(function (item: any, index: number) {
                         return `<span><p class='movie-p-genres' key=${index}>${item}</p></span>`
                     })
-                ):' '
+                ) : ' '
                 }</div>
                                          <p class='movie-year-details'>上映时间:${date.year}</p>                           
                                         <p class='movie-author-details'>导演:${date.directors}</p>
@@ -67,17 +67,17 @@ const ShowDetails =(category:string,date:any)=>{
                                                                     <p class='castsImg-name-details' >${item.name}</p>
                                                                 </div>`
                     })
-                ):' '
+                ) : ' '
                 }</div>                                                                                                   
                                     </footer>
                                     </div>                           
-                                </article>`;
-            break;
+                                </article>`
+            break
         case 'musics':
-            details_html  = `<article class="item-article-details">
+            details_html = `<article class="item-article-details">
 
                                 <header class="item-header-details">
-                                     <p class="item-header-getback" onclick="document.getElementsByClassName('item-article-details')[0].style.display='none'"><返回</p>
+                                     <p class="item-header-getback" onclick="remove_element_class('.item-article-details')""><返回</p>
                                      <h3 class="item-title-details">${date.title}</h3>
                                 </header>
                                 
@@ -93,7 +93,7 @@ const ShowDetails =(category:string,date:any)=>{
                     date.tags.map(function (item: any, index: number) {
                         return `<p class='item-p-tags' key=${index}>${item}</p>`
                     })
-                ):' '
+                ) : ' '
                 }</div>          
                                             <p class='item-author-details'>作者:${date.author}</p>
                                             <p class='item-publisher-details'>发布商:${date.publisher}</p>
@@ -107,12 +107,17 @@ const ShowDetails =(category:string,date:any)=>{
                                     </div>
                                 </div>
                             
-                            </article>`;
-            break;
+                            </article>`
+            break
     }
 
-    document.getElementsByClassName('showDetails')[0].innerHTML = details_html;
+    document.getElementsByClassName('showDetails')[0].innerHTML = details_html
 }
 
+const self: any = window
+self.remove_element_class = (className: string) => {
+    const child: any = document.querySelector(className)
+    child.parentNode.removeChild(child)
+}
 
-export default ShowDetails;
+export default ShowDetails
