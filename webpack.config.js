@@ -1,5 +1,8 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   entry: path.join(__dirname, '/src/view_model/index.tsx'),
@@ -21,21 +24,11 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-        exclude: [
-          path.resolve(__dirname, 'node_modules')
-        ]
-      },
-      {
         test: /\.scss$/,
-        use: [{
-          loader: 'style-loader' // 将 JS 字符串生成为 style 节点
-        }, {
-          loader: 'css-loader' // 将 CSS 转化成 CommonJS 模块
-        }, {
-          loader: 'sass-loader' // 将 Sass 编译成 CSS
-        }]
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader']
+        })
       },
       {
         test: /\.tsx?$/, loaders: ['babel-loader', 'ts-loader'], include: path.resolve('src')
@@ -59,6 +52,10 @@ module.exports = {
     'react-dom': 'ReactDOM'
   },
   plugins: [
+    new ExtractTextPlugin('style.css'),
+    new CleanWebpackPlugin(['dist']),
+    new CopyWebpackPlugin([
+      {from: './src/view_model/img', to: './src/view_mode'}]),
     new HtmlWebpackPlugin({
       template: 'src/view_model/index.html',
       filename: 'index.html'

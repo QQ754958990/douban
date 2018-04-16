@@ -1,5 +1,5 @@
 import * as React from "react";
-import './main_style.css';
+import './main_style.scss';
 import {Li} from "./list/list_index";
 
 export class Main extends React.Component {

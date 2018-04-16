@@ -4,7 +4,8 @@
   "main": "ndex.tsx",
   "scripts": {
     "start": "webpack-dev-server --open",
-    "build": "webpack --watch",
+    "watch": "webpack --watch",
+    "build": "webpack ",
     "standard": "standard"
   },
   "author": "",
@@ -23,7 +24,10 @@
     "babel-loader": "^7.1.4",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "clean-webpack-plugin": "^0.1.19",
+    "copy-webpack-plugin": "^4.5.1",
     "css-loader": "^0.28.11",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "html-webpack-plugin": "^3.1.0",
     "node-sass": "^4.8.3",
     "sass-loader": "^7.0.1",

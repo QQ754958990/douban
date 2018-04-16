@@ -1,5 +1,5 @@
 import * as React from "react";
-import './search_style.css';
+import './search_style.scss';
 import Events = NodeJS.Events;
 
 export class Seach extends React.Component<any> {

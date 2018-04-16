@@ -1,5 +1,5 @@
 import * as React from 'react'
-import './app_style.css'
+import './app_style.scss'
 import getData from './getdata'
 import {Header} from './components/header/header_index'
 import {Main} from './components/main/main_index'
