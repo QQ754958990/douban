@@ -1,44 +1,55 @@
 import * as React from 'react'
 import './footer_style.scss'
 
-export class Footer extends React.Component {
+export class Footer extends React.Component<any> {
     shake: any
 
     handle(e: Event) {
+        const element: any = e.target //获取事件元素
+        const datatype = element.getAttribute('datatype') //获取元素类型
+
         //按键抖动 --间隔500毫秒
         let self: any = this
-
-        if (this.shake != undefined) {
+        if (self.shake != undefined) {
             clearTimeout(this.shake)
         }
-        this.shake = setTimeout(function () {
-            self.showCategory.fn(self.category)
-
+        self.shake = setTimeout(function () {
+            self.props.showCategory(self.props.keyword, datatype)
         }, 500)
     }
 
-    componentDidUpdate() {
-        const book: any = this.refs['appfooter-img-book'];
-        const movie: any = this.refs['appfooter-img-movie'];
-        const music: any = this.refs['appfooter-img-music'];
+    /**
+     * 渲染类别颜色
+     */
+    showColor(){
+        const book: any = this.refs['appfooter-img-book']
+        const movie: any = this.refs['appfooter-img-movie']
+        const music: any = this.refs['appfooter-img-music']
 
-        book.style.color  = 'black';
-        movie.style.color = 'black';
-        music.style.color = 'black';
+        book.style.color = 'black'
+        movie.style.color = 'black'
+        music.style.color = 'black'
 
-        const children: any = this.props.children
-        let category = children.state.category
+        let category = this.props.category
         switch (category) {
-            case 1:
-                book.style.color = 'blue';
+            case 'books':
+                book.style.color = 'blue'
                 break
-            case 2:
-                movie.style.color = 'blue';
+            case 'movies':
+                movie.style.color = 'blue'
                 break
-            case 3:
-                music.style.color = 'blue';
+            case 'musics':
+                music.style.color = 'blue'
                 break
         }
+    }
+
+    componentDidMount() {
+       this.showColor();
+    }
+
+    componentDidUpdate() {
+        this.showColor();
     }
 
     render() {
@@ -46,27 +57,18 @@ export class Footer extends React.Component {
             <footer className="app-footer">
                 <div className={'appfooter-ul-item'}>
                     <div id='appfooter-img-book' className={'appfooter-item-category'} ref='appfooter-img-book'
-                         datatype={'1'}
-                         onClick={this.handle.bind({
-                             showCategory: this.props.children,
-                             category: 1
-                         })}><p>图书</p>
+                         datatype={'books'}
+                         onClick={this.handle.bind(this)}><p>图书</p>
                     </div>
 
                     <div id='appfooter-img-movie' className={'appfooter-item-category'} ref='appfooter-img-movie'
-                         datatype={'2'}
-                         onClick={this.handle.bind({
-                             showCategory: this.props.children,
-                             category: 2
-                         })}><p>电影</p>
+                         datatype={'movies'}
+                         onClick={this.handle.bind(this)}><p>电影</p>
                     </div>
 
                     <div id='appfooter-img-music' className={'appfooter-item-category'} ref='appfooter-img-music'
-                         datatype={'3'}
-                         onClick={this.handle.bind({
-                             showCategory: this.props.children,
-                             category: 3
-                         })}><p>音乐</p>
+                         datatype={'musics'}
+                         onClick={this.handle.bind(this)}><p>音乐</p>
                     </div>
                 </div>
             </footer>

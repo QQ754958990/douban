@@ -1,68 +1,66 @@
-import * as React from "react";
-import './search_style.scss';
+import * as React from 'react'
+import './search_style.scss'
 import Events = NodeJS.Events;
 
 export class Seach extends React.Component<any> {
-    shake: any;
-    category:number;
-    constructor(){
-        super({});
-        this.category = 2;
+    shake: any
+    category: string
+
+    constructor() {
+        super({})
+        this.category = this.props.category
     }
 
     handle(e: Events) {
 
-        const self = this;
+        const self = this
         if (this.shake != undefined) {
-            clearTimeout(this.shake);
+            clearTimeout(this.shake)
         }
         self.shake = setTimeout(function () {
 
-            let children: any = self.props.children;
-            let input_value:any = self.refs.searchInput;
+            let input_value: any = self.refs.searchInput
 
-            children.fn(input_value.value, children.state.category);
+            self.props.searchLick(input_value.value, self.props.category)
 
-        }, 500);
+        }, 500)
 
     }
 
-    showText(category: number,self:any) {
+    showText(category: string) {
 
-        let input_value:any = self.refs.searchInput;
-
-        if(input_value){
-            if(this.category != category){
-                input_value.value = '';
-                this.category = category;
-            }
-        }
+        /*let input_value: any = this.refs.searchInput
+        if (input_value) {
+             if (this.category != category) {
+                 input_value.value = ''
+                 this.category = category
+             }
+         }*/
 
 
         switch (category) {
-            case 1:
-                return '\t书名、作者、ISBN';
-            case 2:
-                return '\t电影、影人、影院、电视剧';
-            case 3:
-                return '\t唱片名、表演者、条码、ISRC';
+            case 'books':
+                return '\t书名、作者、ISBN'
+            case 'movies':
+                return '\t电影、影人、影院、电视剧'
+            case 'musics':
+                return '\t唱片名、表演者、条码、ISRC'
         }
     }
 
     componentDidUpdate() {
-        let searchInput: any = this.refs.searchInput;
-        searchInput.focus();
+        let searchInput: any = this.refs.searchInput
+        searchInput.focus()
     }
 
     render() {
-        const children: any = this.props.children;
         return (
             <div className="search_div_container">
                 <span className='search-img-search'></span>
                 <input type="search" className='search-input-search' ref='searchInput'
-                       datatype={children.state.category} placeholder={this.showText(children.state.category,this)}/>
+                       datatype={this.props.category} placeholder={this.showText(this.props.category)}/>
                 <button className='search-button-search' onClick={this.handle.bind(this)}>搜索</button>
             </div>
-        );
+        )
     }
 }
