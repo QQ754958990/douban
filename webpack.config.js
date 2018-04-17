@@ -8,7 +8,7 @@ module.exports = {
   entry: path.join(__dirname, '/src/view_model/index.tsx'),
   output: {
     filename: 'bundle.js',
-    path: path.join(__dirname, '/dist')
+    path: path.join(__dirname, '/dist'),
   },
   devtool: 'source-map',
   devServer: {
@@ -27,7 +27,13 @@ module.exports = {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader']
+          use: [{
+            loader: 'css-loader'
+
+          }, {
+            loader: 'sass-loader'
+
+          }]
         })
       },
       {
@@ -55,7 +61,13 @@ module.exports = {
     new ExtractTextPlugin('style.css'),
     new CleanWebpackPlugin(['dist']),
     new CopyWebpackPlugin([
-      {from: './src/view_model/img', to: './src/view_mode'}]),
+      {from: 'src/view_model/img', to: 'src/view_model/img'},
+      {from: 'node_modules/react/umd/react.development.js', to: 'node_modules/react/umd/react.development.js'},
+      {
+        from: 'node_modules/react-dom/umd/react-dom.development.js',
+        to: 'node_modules/react-dom/umd/react-dom.development.js'
+      }
+    ]),
     new HtmlWebpackPlugin({
       template: 'src/view_model/index.html',
       filename: 'index.html'
